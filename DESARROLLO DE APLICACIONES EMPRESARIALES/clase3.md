@@ -28,3 +28,34 @@ Un solo bloque que contiene la logica
 | servicios grandes       | servicios pequeños y enfocados |
 | bd compartida comun     | cada servicio con su propia bd |
 | su deploy es coordinado | es independiente por servicio  |
+
+### principios de microservicios
+
+- responsabilidad unica -> cada servicio es una isla la comunicacion entre cada una debe estar bien
+  marcada para cada dominio
+- base de datos por servicio
+- deploy independiente, un cambio en uno no afecta a otros
+- falla ailada
+- organizado por negocio -> un equipo = un servicio
+
+## sincrono vs asincrono
+
+| Sincrono                          | Asyncrono                       |
+| --------------------------------- | ------------------------------- |
+| espera a respuesta para continuar | no la espera se puede continuar |
+
+## Orquestacion vs coreografia
+
+### orquestacion
+
+- un director central coordina los paso
+- mas facil de rastrear pero crea acoplamienti
+
+### coreografia
+
+- cada servicio reacciona a eventos sin director
+- mas desacoplada pero el flujo completo es dificil de visualizar
+## event-driven architecture
+es un sistema de microservicion con llamadas sincronas encadenadas
+### eda y el frontend
+que es lo que ve el usuario? el backend responde con un estado pending  el frontend maneja la espera 
