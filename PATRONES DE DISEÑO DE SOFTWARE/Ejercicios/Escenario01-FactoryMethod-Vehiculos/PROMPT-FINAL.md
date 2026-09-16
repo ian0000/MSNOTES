@@ -1,0 +1,15 @@
+# Prompt final · Escenario 01
+
+Mensaje reutilizable con las decisiones de esta revisión ya incorporadas. Adjuntar las capturas V1 y V2 al utilizarlo.
+
+> Revisa mis UML V1 y V2 para una aplicación que registra Auto, Camioneta y Camión y calcula su matrícula. Todos comparten placa, marca, modelo, año de fabricación y avalúo; Camioneta añade capacidad y Camión añade tonelaje y capacidad de carga. La selección del tipo ocurre durante la ejecución y el sistema debe admitir nuevas variantes sin modificar continuamente el flujo que trabaja con los vehículos.
+>
+> Conserva Factory Method: `Vehiculo` y `CreadorVehiculo` abstractos; productos y creadores concretos para Auto, Camioneta y Camión. Todos los vehículos deben implementar `costoMatricula()` sin parámetros. Los creadores reciben los datos comunes y específicos mediante sus constructores y mantienen `creadorVehiculo()` sin parámetros, que devuelve `Vehiculo`. Usa `String` para textos, `int` para años y `BigDecimal` para avalúo y resultados. Ignora los campos provisionales `field: type`.
+>
+> Implementa Java compatible con 11 o superior, sin dependencias externas, en una carpeta independiente llamada `Escenario01-FactoryMethod-Vehiculos` dentro de `PATRONES DE DISEÑO DE SOFTWARE/Ejercicios/`. Incluye selección por argumentos de consola, un cliente que registre en memoria utilizando las abstracciones, y pruebas ejecutables. No necesitas añadir el cliente a mi UML conceptual para considerarlo válido.
+>
+> Puedes definir fórmulas y unidades académicas: documenta que son ficticias. Para una versión reproducible, usa año de cálculo explícito, capacidad de Camioneta en kg y tonelaje/capacidad de Camión en toneladas. Utiliza Auto = avalúo × 0.01 × máximo(0.50, 1 − 0.05 × antigüedad); Camioneta = avalúo × 0.012 + capacidad × 0.02; Camión = avalúo × 0.015 + tonelaje × 10 + capacidadCarga × 5. Redondea al final a dos decimales con HALF_UP. Documenta y prueba las validaciones y los límites de los supuestos; no impongas reglas oficiales de matrícula.
+>
+> Conserva las imágenes como `uml-v1.png` y `uml-v2.png`. En el README compara ambas versiones y distingue cambios visibles, correcciones aceptadas aún no dibujadas y adaptaciones de código. Incluye explicación del patrón, recorrido de los datos, comandos PowerShell, salidas esperadas y pruebas realmente ejecutadas. Al final del README coloca recomendaciones concretas sobre mi UML V2, no una lista de mejoras futuras.
+>
+> En `DECISIONES.md` registra que acepté uniformar firmas, diferenciar creadores y usar tipos Java; que aclaré que los campos provisionales eran restos de la herramienta; que delegué fórmulas, unidades y cliente; y que, después de la explicación, elegí entregar datos al constructor del creador. Redacta las justificaciones técnicas sin inventar rechazos ni motivos personales. Las capturas pueden seguir mostrando decisiones aceptadas pero aún no dibujadas. Incluye este prompt final en el entregable. Consulta únicamente si aparece un cambio importante de lógica no cubierto por estas decisiones.
