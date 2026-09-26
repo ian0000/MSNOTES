@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2100" height="1130" viewBox="0 0 2100 1130">
+<rect width="100%" height="100%" fill="#f5f7fb"/>
+<text x="45" y="61.16" font-family="Arial,sans-serif" font-size="38" font-weight="bold" fill="#18314b">Template Method · Caso 4: importación de archivos</text>
+<text x="45" y="102.68" font-family="Arial,sans-serif" font-size="24" font-weight="normal" fill="#465b72">Flujo común en la clase base; lectura y transformación especializadas por formato.</text>
+<rect x="510" y="145" width="1080" height="335" fill="#ffffff" stroke="#50708f" stroke-width="2"/>
+<rect x="510" y="145" width="1080" height="76" fill="#e5edf9" stroke="#50708f" stroke-width="2"/>
+<text x="1003.0" y="173.4" font-family="Arial,sans-serif" font-size="20" font-weight="normal" fill="#18314b">«abstract»</text>
+<text x="864.5" y="207.96" font-family="Arial,sans-serif" font-size="28" font-weight="bold" fill="#18314b">ImportacionInformacion&lt;T&gt;</text>
+<text x="532" y="253.86" font-family="Consolas,monospace" font-size="23" font-weight="normal" fill="#18314b">- destino: Path</text>
+<polyline points="510,271 1590,271" fill="none" stroke="#50708f" stroke-width="3"/>
+<text x="532" y="308.86" font-family="Consolas,monospace" font-size="23" font-weight="normal" fill="#18314b">+ importar(archivo: Path): Registros {leaf}</text>
+<text x="532" y="342.86" font-family="Consolas,monospace" font-size="23" font-weight="normal" fill="#18314b"># validarArchivo(archivo: Path): boolean {leaf}</text>
+<text x="532" y="376.86" font-family="Consolas,monospace" font-size="23" font-weight="normal" fill="#18314b"># leerDatos(archivo: Path): T {abstract}</text>
+<text x="532" y="410.86" font-family="Consolas,monospace" font-size="23" font-weight="normal" fill="#18314b"># transformarDatos(datos: T): Registros {abstract}</text>
+<text x="532" y="444.86" font-family="Consolas,monospace" font-size="23" font-weight="normal" fill="#18314b"># almacenarDatos(registros: Registros): void {leaf}</text>
+<polyline points="360,575 360,530 1740,530 1740,575" fill="none" stroke="#50708f" stroke-width="3"/>
+<polyline points="1050,575 1050,505" fill="none" stroke="#50708f" stroke-width="3"/>
+<polygon points="1037,505 1063,505 1050,480" fill="white" stroke="#50708f" stroke-width="3"/>
+<rect x="40" y="575" width="640" height="215" fill="#ffffff" stroke="#50708f" stroke-width="2"/>
+<rect x="40" y="575" width="640" height="61" fill="#e5f3ee" stroke="#50708f" stroke-width="2"/>
+<text x="285.0" y="616.78" font-family="Arial,sans-serif" font-size="29" font-weight="bold" fill="#18314b">ImportCSV</text>
+<text x="60" y="670.04" font-family="Consolas,monospace" font-size="22" font-weight="normal" fill="#18314b">T = FilasCSV</text>
+<polyline points="40,688 680,688" fill="none" stroke="#50708f" stroke-width="3"/>
+<text x="60" y="720.58" font-family="Consolas,monospace" font-size="19" font-weight="normal" fill="#18314b"># leerDatos(archivo: Path): FilasCSV</text>
+<text x="60" y="760.58" font-family="Consolas,monospace" font-size="19" font-weight="normal" fill="#18314b"># transformarDatos(datos: FilasCSV): Registros</text>
+<rect x="730" y="575" width="640" height="215" fill="#ffffff" stroke="#50708f" stroke-width="2"/>
+<rect x="730" y="575" width="640" height="61" fill="#e5f3ee" stroke="#50708f" stroke-width="2"/>
+<text x="965.0" y="616.78" font-family="Arial,sans-serif" font-size="29" font-weight="bold" fill="#18314b">ImportJSON</text>
+<text x="750" y="670.04" font-family="Consolas,monospace" font-size="22" font-weight="normal" fill="#18314b">T = ObjetosJSON</text>
+<polyline points="730,688 1370,688" fill="none" stroke="#50708f" stroke-width="3"/>
+<text x="750" y="720.58" font-family="Consolas,monospace" font-size="19" font-weight="normal" fill="#18314b"># leerDatos(archivo: Path): ObjetosJSON</text>
+<text x="750" y="760.58" font-family="Consolas,monospace" font-size="19" font-weight="normal" fill="#18314b"># transformarDatos(datos: ObjetosJSON): Registros</text>
+<rect x="1420" y="575" width="640" height="215" fill="#ffffff" stroke="#50708f" stroke-width="2"/>
+<rect x="1420" y="575" width="640" height="61" fill="#e5f3ee" stroke="#50708f" stroke-width="2"/>
+<text x="1664.0" y="616.78" font-family="Arial,sans-serif" font-size="29" font-weight="bold" fill="#18314b">ImportXML</text>
+<text x="1440" y="670.04" font-family="Consolas,monospace" font-size="22" font-weight="normal" fill="#18314b">T = Document</text>
+<polyline points="1420,688 2060,688" fill="none" stroke="#50708f" stroke-width="3"/>
+<text x="1440" y="720.58" font-family="Consolas,monospace" font-size="19" font-weight="normal" fill="#18314b"># leerDatos(archivo: Path): Document</text>
+<text x="1440" y="760.58" font-family="Consolas,monospace" font-size="19" font-weight="normal" fill="#18314b"># transformarDatos(datos: Document): Registros</text>
+<rect x="40" y="837" width="2020" height="66" fill="#18314b" stroke="#18314b" stroke-width="2"/>
+<text x="534.0" y="880.14" font-family="Arial,sans-serif" font-size="27" font-weight="normal" fill="white">importar  →  validarArchivo  →  leerDatos  →  transformarDatos  →  almacenarDatos</text>
+<text x="45" y="952.86" font-family="Arial,sans-serif" font-size="23" font-weight="normal" fill="#18314b">Registros = List&lt;Registro&gt;  ·  Registro contiene codigo y nombre.</text>
+<text x="45" y="991.04" font-family="Arial,sans-serif" font-size="22" font-weight="normal" fill="#18314b">FilasCSV = List&lt;List&lt;String&gt;&gt;  ·  ObjetosJSON = List&lt;Map&lt;String, String&gt;&gt;  ·  Document = DOM del JDK.</text>
+<text x="45" y="1030.04" font-family="Arial,sans-serif" font-size="22" font-weight="normal" fill="#18314b">{leaf} = final en Java; {abstract} = paso implementado por las subclases. + público; # protegido; - privado.</text>
+<text x="45" y="1071.22" font-family="Arial,sans-serif" font-size="21" font-weight="normal" fill="#465b72">Los nombres abreviados son alias del dibujo, no clases adicionales. Los constructores reciben el destino.</text>
+</svg>
