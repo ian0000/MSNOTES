@@ -1,6 +1,6 @@
 # Guías de estudio: Patrones de Diseño de Software
 
-Siete resúmenes explicativos, uno por presentación de `ClasesDiapositivas`, organizados según la numeración de las unidades. El material fuente pertenece a Mauricio Ortiz Ochoa. Cada guía puede leerse por separado e incluye enlace al PDF y páginas de referencia.
+Nueve resúmenes explicativos, uno por presentación de `ClasesDiapositivas`, organizados según la numeración de las unidades. El material fuente pertenece a Mauricio Ortiz Ochoa. Cada guía puede leerse por separado e incluye enlace al PDF y páginas de referencia.
 
 ## Índice por clase
 
@@ -13,6 +13,8 @@ Siete resúmenes explicativos, uno por presentación de `ClasesDiapositivas`, or
 | 01.05 | [Code smells, STUPID y SOLID](01-05-principios-solid.md) | Responsabilidades, extensión, contratos, interfaces y dependencias |
 | 02.01 | [Composite, Adapter y Facade](02-01-composite-adapter-facade.md) | Jerarquías parte–todo, adaptación de interfaces y acceso a subsistemas |
 | 02.02 | [Bridge y Decorator](02-02-bridge-decorator.md) | Variaciones independientes y responsabilidades combinables |
+| 03.01 | [Strategy y Template Method](03-01-strategy-template-method.md) | Algoritmos intercambiables y secuencias con pasos especializados |
+| 03.02 | [State y Observer](03-02-state-observer.md) | Comportamiento según el estado y propagación a múltiples interesados |
 
 ## Cómo estudiar con las guías
 
@@ -26,6 +28,6 @@ Para los patrones, conviene poder explicar el problema, los participantes, la co
 
 ## Fuentes y ejemplos
 
-Las guías sintetizan las siete presentaciones locales y sus diagramas. Las explicaciones, recorridos y ejemplos añadidos se identifican como elaboraciones didácticas; las orientaciones sobre actividades no se presentan como soluciones oficiales.
+Las guías sintetizan las nueve presentaciones locales y sus diagramas. Las explicaciones, recorridos y ejemplos añadidos se identifican como elaboraciones didácticas; las orientaciones sobre actividades no se presentan como soluciones oficiales.
 
 Los fragmentos de pseudocódigo ilustran la estructura. No representan una implementación ejecutada ni una validación de los repositorios externos enlazados en los PDF. Las referencias de página corresponden a la posición de la diapositiva en cada archivo, contando la portada como página 1.

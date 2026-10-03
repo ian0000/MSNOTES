@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1080" viewBox="0 0 1800 1080">
+  <defs>
+    <style>
+      .title { font: 700 38px Arial, sans-serif; fill: #17324d; }
+      .subtitle { font: 24px Arial, sans-serif; fill: #4b6075; }
+      .name { font: 700 24px Arial, sans-serif; fill: #17324d; text-anchor: middle; }
+      .stereo { font: italic 18px Arial, sans-serif; fill: #17324d; text-anchor: middle; }
+      .member { font: 19px Consolas, monospace; fill: #17324d; }
+      .small { font: 18px Arial, sans-serif; fill: #4b6075; }
+      .label { font: 18px Arial, sans-serif; fill: #17324d; }
+      .box { fill: #fff; stroke: #50708f; stroke-width: 2; }
+      .abstract { fill: #e5edf9; stroke: #50708f; stroke-width: 2; }
+      .interface { fill: #fff0d8; stroke: #9b762d; stroke-width: 2; }
+      .concrete { fill: #e5f3ee; stroke: #50708f; stroke-width: 2; }
+      .data { fill: #f1eafa; stroke: #72558f; stroke-width: 2; }
+      .edge { fill: none; stroke: #50708f; stroke-width: 3; }
+      .dash { fill: none; stroke: #50708f; stroke-width: 3; stroke-dasharray: 10 8; }
+    </style>
+    <marker id="openArrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M 0 1 L 10 6 L 0 11" fill="none" stroke="#50708f" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <rect width="1800" height="1080" fill="#f5f7fb"/>
+  <text x="50" y="55" class="title">Observer · Caso 4: subasta electrónica</text>
+  <text x="50" y="95" class="subtitle">La subasta publica cambios de la oferta máxima; los participantes se suscriben y reaccionan sin acoplamiento concreto.</text>
+
+  <!-- Subject -->
+  <rect x="60" y="180" width="650" height="310" class="box"/>
+  <rect x="60" y="180" width="650" height="78" class="abstract"/>
+  <text x="385" y="208" class="stereo">«abstract»</text>
+  <text x="385" y="240" class="name">CambioDeValor</text>
+  <line x1="60" y1="310" x2="710" y2="310" class="edge"/>
+  <text x="82" y="287" class="member">- participantes: List&lt;ValorObserver&gt;</text>
+  <text x="82" y="350" class="member">+ attach(participante: ValorObserver): void</text>
+  <text x="82" y="390" class="member">+ detach(participante: ValorObserver): void</text>
+  <text x="82" y="430" class="member">+ obtenerNumeroParticipantes(): int</text>
+  <text x="82" y="470" class="member"># notifyObservers(estado: EstadoSubasta): void</text>
+
+  <!-- Observer -->
+  <rect x="1110" y="190" width="620" height="180" class="box"/>
+  <rect x="1110" y="190" width="620" height="78" class="interface"/>
+  <text x="1420" y="218" class="stereo">«interface»</text>
+  <text x="1420" y="250" class="name">ValorObserver</text>
+  <text x="1135" y="320" class="member">+ cambioOferta(estado: EstadoSubasta): void</text>
+
+  <!-- association -->
+  <path d="M 710 275 L 1110 275" class="edge" marker-end="url(#openArrow)"/>
+  <polygon points="710,275 730,260 750,275 730,290" fill="white" stroke="#50708f" stroke-width="3"/>
+  <text x="790" y="258" class="label">participantes</text>
+  <text x="1050" y="258" class="label">0..*</text>
+
+  <!-- ConcreteSubject -->
+  <rect x="60" y="670" width="720" height="290" class="box"/>
+  <rect x="60" y="670" width="720" height="62" class="concrete"/>
+  <text x="420" y="710" class="name">Subasta</text>
+  <text x="82" y="770" class="member">- valorActual: BigDecimal</text>
+  <text x="82" y="808" class="member">- estadoActual: EstadoSubasta [0..1]</text>
+  <line x1="60" y1="835" x2="780" y2="835" class="edge"/>
+  <text x="82" y="875" class="member">+ realizarOferta(ofertante: String, valor: BigDecimal): boolean</text>
+  <text x="82" y="915" class="member">+ obtenerValorActual(): BigDecimal</text>
+  <text x="82" y="950" class="member">+ obtenerEstadoActual(): Optional&lt;EstadoSubasta&gt;</text>
+
+  <!-- inheritance subject -->
+  <path d="M 420 670 L 420 535 L 385 535 L 385 490" class="edge"/>
+  <polygon points="385,490 367,522 403,522" fill="white" stroke="#50708f" stroke-width="3"/>
+
+  <!-- ConcreteObserver -->
+  <rect x="1010" y="610" width="720" height="350" class="box"/>
+  <rect x="1010" y="610" width="720" height="62" class="concrete"/>
+  <text x="1370" y="650" class="name">Participante</text>
+  <text x="1035" y="710" class="member">- nombre: String</text>
+  <text x="1035" y="748" class="member">- ultimaActualizacion: EstadoSubasta [0..1]</text>
+  <text x="1035" y="786" class="member">- notificacionesRecibidas: int</text>
+  <line x1="1010" y1="812" x2="1730" y2="812" class="edge"/>
+  <text x="1035" y="850" class="member">+ cambioOferta(estado: EstadoSubasta): void</text>
+  <text x="1035" y="890" class="member">+ realizarNuevaOferta(subasta: Subasta, valor: BigDecimal): boolean</text>
+  <text x="1035" y="930" class="member">+ obtenerUltimaActualizacion(): Optional&lt;EstadoSubasta&gt;</text>
+
+  <!-- realization observer -->
+  <path d="M 1370 610 L 1370 410 L 1420 410 L 1420 370" class="dash"/>
+  <polygon points="1420,370 1402,402 1438,402" fill="white" stroke="#50708f" stroke-width="3"/>
+
+  <!-- State data -->
+  <rect x="780" y="95" width="0" height="0" fill="none"/>
+  <rect x="750" y="410" width="570" height="165" class="box"/>
+  <rect x="750" y="410" width="570" height="58" class="data"/>
+  <text x="1035" y="447" class="name">EstadoSubasta</text>
+  <text x="772" y="500" class="member">- numeroOferta: long</text>
+  <text x="772" y="535" class="member">- ofertante: String</text>
+  <text x="1025" y="535" class="member">- valorActual: BigDecimal</text>
+
+  <!-- dependencies -->
+  <path d="M 780 720 L 870 720 L 870 575" class="dash" marker-end="url(#openArrow)"/>
+  <text x="785" y="700" class="small">crea y notifica</text>
+  <path d="M 1010 780 L 930 780 L 930 815 L 780 815" class="dash" marker-end="url(#openArrow)"/>
+  <text x="830" y="800" class="small">realiza oferta</text>
+
+  <rect x="60" y="1005" width="1670" height="52" fill="#17324d"/>
+  <text x="895" y="1039" style="font: 24px Arial, sans-serif; fill: white; text-anchor: middle;">oferta superior → Subasta actualiza EstadoSubasta → notifyObservers → cada Participante recibe cambioOferta</text>
+</svg>
