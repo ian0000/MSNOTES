@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archimate:model xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:archimate="http://www.archimatetool.com/archimate" name="MedConnect Ecosistema - Agendamiento de citas" id="id-e83e4af4940043b58d934b1aa8d0f50b" version="5.0.0">
+  <folder name="Strategy" id="id-224ec0b4be5b480298b319340d5403c1" type="strategy"/>
+  <folder name="Business" id="id-192e9a5732b64d029ddc0bb4e1e3f3cf" type="business">
+    <element xsi:type="archimate:BusinessActor" name="Doctor" id="id-5b63438ac425408fbb6b66cc278ce23c"/>
+    <element xsi:type="archimate:BusinessProcess" name="Agendar y confirmar cita" id="id-da015f3761d64aa9a95392b9f4f68cb8">
+      <documentation>Business Process: consultar disponibilidad vigente, validar paciente y reservar de forma consistente. Contribuye al Outcome; no implica garantía de rendimiento sin medición.</documentation>
+    </element>
+    <element xsi:type="archimate:BusinessFunction" name="Gestión de agenda clínica" id="id-22395a9f7e7c4bb09b60f8e4ca8ee68b"/>
+    <element xsi:type="archimate:BusinessRole" name="Coordinación de citas" id="id-9758f3c04eb349b2b8be71f02712d7df"/>
+    <element xsi:type="archimate:BusinessObject" name="Solicitud de cita" id="id-aa3559ea5649479d8b05b50de5a0bb89"/>
+    <element xsi:type="archimate:BusinessService" name="Disponibilidad Horaria Doctor" id="id-d61a7cadb9854e5aa13b3e5348a8d6a8"/>
+    <element xsi:type="archimate:BusinessActor" name="Enfermera" id="id-b48649c9ffe34695aafa905d863c6df6"/>
+    <element xsi:type="archimate:BusinessActor" name="Pacientes" id="id-88ca1b2fbf6a44439cac2def67e02cc4"/>
+    <element xsi:type="archimate:BusinessProcess" name="Revision citas pendientes" id="id-f63aacf382c4435eab38837e9754fd7b"/>
+    <element xsi:type="archimate:BusinessProcess" name="Disponibilidad de consultorio" id="id-cde167b09bc945439a8cb2949f84c8d1"/>
+    <element xsi:type="archimate:BusinessService" name="Agendamiento" id="id-99e07de9d7c74351b602cf50497cf2e0"/>
+    <element xsi:type="archimate:BusinessActor" name="Centro médico aliado" id="id-5bde9f4ac4b04422a56ad0b9cd4017cf">
+      <documentation>Aliado que opera el proceso de agendamiento y mide la conversión de solicitudes válidas en citas confirmadas.</documentation>
+    </element>
+  </folder>
+  <folder name="Application" id="id-916d20c33aa14c82968eefcec614c47a" type="application">
+    <element xsi:type="archimate:ApplicationComponent" name="Motor de agendamiento MedConnect" id="id-87f96994819b464a80e523b203a3ceb7">
+      <documentation>Application Component interno que implementa disponibilidad, validación y confirmación de reservas. Separa el código del servicio expuesto y de su contrato REST/JSON.</documentation>
+    </element>
+    <element xsi:type="archimate:ApplicationComponent" name="API Gateway" id="id-2e55fb090aff494fbc161f2dfa0858a5"/>
+    <element xsi:type="archimate:ApplicationComponent" name="Portal del aliado" id="id-bb23e1ea56194614adbfed06220108e5"/>
+    <element xsi:type="archimate:ApplicationComponent" name="SSO" id="id-05a523d37fa2466cac2604c7b0aeeac3"/>
+    <element xsi:type="archimate:ApplicationComponent" name="Webhook notificaciones" id="id-f294acf661454cfe9a755e598d7ea01f"/>
+    <element xsi:type="archimate:ApplicationService" name="Consultar disponibilidad y confirmar cita" id="id-401b4c5b35e744a088be5fe4c43dbfa6">
+      <documentation>Application Service consumido por el proceso de negocio. La interfaz API_Riesgo_v1 lo expone. La confirmación requiere persistencia consistente; una respuesta parcial no equivale a una cita confirmada.</documentation>
+    </element>
+    <element xsi:type="archimate:ApplicationInterface" name="API_Riesgo_v1 (REST/JSON)" id="id-c62dfd77da3d479095b42af09a2e6c5d">
+      <documentation>Nombre exigido por el taller, aplicado aquí al contrato de agendamiento de MedConnect. Punto de acceso externo del componente; no representa un cálculo de riesgo clínico ni acceso directo a la base de datos. Operaciones conceptuales: GET /v1/disponibilidad y POST /v1/citas.</documentation>
+    </element>
+    <element xsi:type="archimate:DataObject" name="Agenda y citas" id="id-3635648e6610420b87ee9d180ec13ef8">
+      <documentation>Información lógica de disponibilidad y reservas. Se materializa físicamente en el Artifact Base de datos de citas.</documentation>
+    </element>
+  </folder>
+  <folder name="Technology &amp; Physical" id="id-b79719a5e69c4dfa8324f5fc4bc0a743" type="technology">
+    <element xsi:type="archimate:Node" name="Kubernetes Cloud" id="id-10ce34a194084d679a4e3abb85a82471">
+      <documentation>Node de ejecución del componente de agendamiento conservado del modelo inicial; sin despliegue real verificado.</documentation>
+    </element>
+    <element xsi:type="archimate:Node" name="SQL Azure" id="id-30f2924ca0c344759927cdb79639e6e3">
+      <documentation>Node tecnológico de persistencia ya presente en el modelo original. Aloja el Artifact de citas y sirve al componente de agendamiento. Representa una decisión del modelo académico, no un despliegue verificado.</documentation>
+    </element>
+    <element xsi:type="archimate:Node" name="AWS" id="id-061c55c23c4246cbb3af86396402e8cc"/>
+    <element xsi:type="archimate:Artifact" name="Base de datos de citas" id="id-5ec165bfa4984bdf95f8ee1a0945f588">
+      <documentation>Artifact: esquema y datos físicos de agenda y reservas, desplegados en el nodo SQL Azure. Realiza el Data Object Agenda y citas. No es un Application Component.</documentation>
+    </element>
+  </folder>
+  <folder name="Motivation" id="id-25339b8dca0a4c65a8e667a12cc17b3c" type="motivation">
+    <element xsi:type="archimate:Goal" name="Aumentar conversión a citas confirmadas" id="id-66301fca8b2a41c5a67324fd46430886">
+      <documentation>Goal: habilitar una API interoperable de MedConnect que aumente la proporción de solicitudes válidas que terminan en una cita confirmada para el centro médico aliado. Sin línea base ni incremento porcentual medido.</documentation>
+    </element>
+    <element xsi:type="archimate:Outcome" name="Agendamiento confirmado en máximo 3 s" id="id-c7e17c23042941bda9669de2457953dc">
+      <documentation>Outcome esperado, no resultado medido. Meta operativa propuesta: p95 del tiempo de confirmación extremo a extremo &lt;= 3 s, desde confirmar en el canal del aliado hasta recibir la reserva persistida. Medir errores y timeouts además de latencia para evitar sesgo de supervivencia.</documentation>
+    </element>
+    <element xsi:type="archimate:Driver" name="Demanda de agendamiento digital ágil" id="id-be23c68e1ce84b778b0687a73fb74016">
+      <documentation>Driver de MedConnect: transformación digital del acceso a citas y necesidad del aliado de reducir fricción y esperas.</documentation>
+    </element>
+  </folder>
+  <folder name="Implementation &amp; Migration" id="id-77710fefa25147c0ba0729af8dc664e1" type="implementation_migration"/>
+  <folder name="Other" id="id-a096683d4ef849e5bbb5f01d401c90a8" type="other"/>
+  <folder name="Relations" id="id-e7ac95db83a64ccf956879870365f1a4" type="relations">
+    <element xsi:type="archimate:RealizationRelationship" name="Realization" id="id-3f8da8c48ab849599545ba381f96b83d" source="id-c7e17c23042941bda9669de2457953dc" target="id-66301fca8b2a41c5a67324fd46430886"/>
+    <element xsi:type="archimate:InfluenceRelationship" name="Influence" id="id-c282a615f93e4c44a273b4dc4992510c" source="id-be23c68e1ce84b778b0687a73fb74016" target="id-66301fca8b2a41c5a67324fd46430886"/>
+    <element xsi:type="archimate:AssignmentRelationship" name="Assignment" id="id-6ab778af86354a2882555d9def1adc8a" source="id-88ca1b2fbf6a44439cac2def67e02cc4" target="id-da015f3761d64aa9a95392b9f4f68cb8"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-5a6c20bcfeaa4588847fda27ae806cc5" source="id-5b63438ac425408fbb6b66cc278ce23c" target="id-f63aacf382c4435eab38837e9754fd7b"/>
+    <element xsi:type="archimate:AssignmentRelationship" id="id-1ef41cc1130f4d91af46ccdc39b652e0" source="id-b48649c9ffe34695aafa905d863c6df6" target="id-cde167b09bc945439a8cb2949f84c8d1"/>
+    <element xsi:type="archimate:ServingRelationship" id="id-1bc824dbf6f84e2eb2ad279a58ec0778" source="id-99e07de9d7c74351b602cf50497cf2e0" target="id-da015f3761d64aa9a95392b9f4f68cb8"/>
+    <element xsi:type="archimate:ServingRelationship" id="id-2d05cb80ac0a4a88bbf07acbadcd6116" source="id-99e07de9d7c74351b602cf50497cf2e0" target="id-f63aacf382c4435eab38837e9754fd7b"/>
+    <element xsi:type="archimate:ServingRelationship" id="id-8306fc7de6994880b0a1bb3044322540" source="id-d61a7cadb9854e5aa13b3e5348a8d6a8" target="id-f63aacf382c4435eab38837e9754fd7b"/>
+    <element xsi:type="archimate:AssignmentRelationship" name="Assignment" id="id-948896a11873417f8bac29d25d922dc6" source="id-30f2924ca0c344759927cdb79639e6e3" target="id-5ec165bfa4984bdf95f8ee1a0945f588"/>
+    <element xsi:type="archimate:ServingRelationship" id="id-223201b990a348fea6a04fb26cd6744d" source="id-061c55c23c4246cbb3af86396402e8cc" target="id-bb23e1ea56194614adbfed06220108e5"/>
+    <element xsi:type="archimate:AssignmentRelationship" name="Assignment" id="id-57231e8b09dd4c63a21be8dc5995d0eb" source="id-5bde9f4ac4b04422a56ad0b9cd4017cf" target="id-da015f3761d64aa9a95392b9f4f68cb8"/>
+    <element xsi:type="archimate:RealizationRelationship" name="Realization" id="id-19eff8b67bdb4e28b6b1d7c224374490" source="id-da015f3761d64aa9a95392b9f4f68cb8" target="id-c7e17c23042941bda9669de2457953dc"/>
+    <element xsi:type="archimate:ServingRelationship" name="Serving" id="id-c08de40718874ce59f43065fe5241cb6" source="id-401b4c5b35e744a088be5fe4c43dbfa6" target="id-da015f3761d64aa9a95392b9f4f68cb8"/>
+    <element xsi:type="archimate:RealizationRelationship" name="Realization" id="id-fe66376ef309474199ce93b92461c3b0" source="id-87f96994819b464a80e523b203a3ceb7" target="id-401b4c5b35e744a088be5fe4c43dbfa6">
+      <documentation>Realización directa permitida por la matriz 3.2 de ArchiMate. El componente implementa el servicio expuesto.</documentation>
+    </element>
+    <element xsi:type="archimate:CompositionRelationship" name="Composition" id="id-9243976618d74beda13e3e27120b2571" source="id-87f96994819b464a80e523b203a3ceb7" target="id-c62dfd77da3d479095b42af09a2e6c5d">
+      <documentation>El componente contiene su punto de acceso. Composition: componente (todo) -> interfaz (parte).</documentation>
+    </element>
+    <element xsi:type="archimate:AssignmentRelationship" name="Assignment" id="id-e75f3559faf841339755fde0da5c37ba" source="id-c62dfd77da3d479095b42af09a2e6c5d" target="id-401b4c5b35e744a088be5fe4c43dbfa6">
+      <documentation>La interfaz se asigna al servicio y lo expone al consumidor externo. Assignment: interfaz -> servicio. No se invierte la relación de Composition.</documentation>
+    </element>
+    <element xsi:type="archimate:AccessRelationship" name="Access" id="id-858c911a8b154893b24af065bf306d2f" source="id-87f96994819b464a80e523b203a3ceb7" target="id-3635648e6610420b87ee9d180ec13ef8" accessType="3"/>
+    <element xsi:type="archimate:ServingRelationship" name="Serving" id="id-41466a4c99464208bb7a15323a80705c" source="id-10ce34a194084d679a4e3abb85a82471" target="id-87f96994819b464a80e523b203a3ceb7"/>
+    <element xsi:type="archimate:ServingRelationship" name="Serving" id="id-f91d2f3e8cc642f6a6739136197611b9" source="id-30f2924ca0c344759927cdb79639e6e3" target="id-87f96994819b464a80e523b203a3ceb7"/>
+    <element xsi:type="archimate:RealizationRelationship" name="Realization" id="id-2065a2ba3e794e4793f74580b9cc2ef1" source="id-5ec165bfa4984bdf95f8ee1a0945f588" target="id-3635648e6610420b87ee9d180ec13ef8"/>
+  </folder>
+  <folder name="Views" id="id-566bb4feaadc4f27b546c26ccbf77879" type="diagrams">
+    <element xsi:type="archimate:ArchimateDiagramModel" name="01 MedConnect - Agendamiento en 3 segundos" id="id-4953a76b303d4b7eadb4751ea9e68110">
+      <child xsi:type="archimate:Group" id="id-4dd35c359ec64467b9d114fa91d91c6d" name="1  MOTIVACIÓN   |   Impulsor, objetivo y resultado esperado" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" textAlignment="1" fillColor="#f4eff9">
+        <bounds x="30" y="30" width="1320" height="180"/>
+        <child xsi:type="archimate:DiagramObject" id="id-0b4c2f5483084527ba10e80130d89626" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-be23c68e1ce84b778b0687a73fb74016">
+          <bounds x="35" y="60" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-df62ef2a5c5349afa165426d3bf3f3b0" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-0b4c2f5483084527ba10e80130d89626" target="id-c7681e074b83443ea898743a64e07767" archimateRelationship="id-c282a615f93e4c44a273b4dc4992510c"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-c7681e074b83443ea898743a64e07767" targetConnections="id-df62ef2a5c5349afa165426d3bf3f3b0 id-74111150d1a34378bbffde368536e736" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-66301fca8b2a41c5a67324fd46430886">
+          <bounds x="505" y="60" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-e3a3a3d4a97e480e85411db9bf908ccb" targetConnections="id-ec7ad7cd21ae49dc8ed1b61530a5ff73" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-c7e17c23042941bda9669de2457953dc">
+          <bounds x="975" y="60" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-74111150d1a34378bbffde368536e736" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-e3a3a3d4a97e480e85411db9bf908ccb" target="id-c7681e074b83443ea898743a64e07767" archimateRelationship="id-3f8da8c48ab849599545ba381f96b83d"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-3262d91ee41746409c2e147744c45880" name="2  NEGOCIO   |   Quién participa y qué proceso genera valor" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" textAlignment="1" fillColor="#fff9e8">
+        <bounds x="30" y="255" width="1320" height="180"/>
+        <child xsi:type="archimate:DiagramObject" id="id-c9f6f3e98c9746e1aaec6dea23ffd754" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-88ca1b2fbf6a44439cac2def67e02cc4">
+          <bounds x="35" y="60" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-f1112bc59329493eb3ced2d7b3a06646" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-c9f6f3e98c9746e1aaec6dea23ffd754" target="id-d88fb8ce124a450ca649571f56e9a308" archimateRelationship="id-6ab778af86354a2882555d9def1adc8a"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-d88fb8ce124a450ca649571f56e9a308" targetConnections="id-f1112bc59329493eb3ced2d7b3a06646 id-6e4235646f664efab829bc88e5a67563 id-017ad05f565a4d0080b138c7bb61a9ae" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-da015f3761d64aa9a95392b9f4f68cb8">
+          <bounds x="505" y="60" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-ec7ad7cd21ae49dc8ed1b61530a5ff73" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-d88fb8ce124a450ca649571f56e9a308" target="id-e3a3a3d4a97e480e85411db9bf908ccb" archimateRelationship="id-19eff8b67bdb4e28b6b1d7c224374490">
+            <bendpoint startY="-125" endX="-470" endY="100"/>
+            <bendpoint startX="470" startY="-125" endY="100"/>
+          </sourceConnection>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-c5c0d328ff59487eab0cbfa89235df82" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-5bde9f4ac4b04422a56ad0b9cd4017cf">
+          <bounds x="975" y="60" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-6e4235646f664efab829bc88e5a67563" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-c5c0d328ff59487eab0cbfa89235df82" target="id-d88fb8ce124a450ca649571f56e9a308" archimateRelationship="id-57231e8b09dd4c63a21be8dc5995d0eb"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-91cb44e8407849f6a3df77116322a8ec" name="3  APLICACIÓN   |   Contrato externo, servicio y código interno" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" textAlignment="1" fillColor="#edf8fc">
+        <bounds x="30" y="505" width="1320" height="360"/>
+        <child xsi:type="archimate:DiagramObject" id="id-a6dfc3c4a8844c97b80e5bfad8db368d" targetConnections="id-96a7f40c2e4441ec8ab91d522a31ba4a" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-c62dfd77da3d479095b42af09a2e6c5d">
+          <bounds x="35" y="55" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-97ae60c203844a56923ade49bcc95784" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-a6dfc3c4a8844c97b80e5bfad8db368d" target="id-321e0ac80de248ce8bcdafe2b20a7993" archimateRelationship="id-e75f3559faf841339755fde0da5c37ba"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-321e0ac80de248ce8bcdafe2b20a7993" targetConnections="id-5de09829c6044c4085c13d07f99105d3 id-97ae60c203844a56923ade49bcc95784" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-401b4c5b35e744a088be5fe4c43dbfa6">
+          <bounds x="505" y="55" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-017ad05f565a4d0080b138c7bb61a9ae" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-321e0ac80de248ce8bcdafe2b20a7993" target="id-d88fb8ce124a450ca649571f56e9a308" archimateRelationship="id-c08de40718874ce59f43065fe5241cb6"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-6007311971c64c899913d893d5986e05" targetConnections="id-9fe75492bef049e784d120052756f982 id-1374414ad6264f14bfd43e072822bdbe" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-87f96994819b464a80e523b203a3ceb7">
+          <bounds x="505" y="240" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-5de09829c6044c4085c13d07f99105d3" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-6007311971c64c899913d893d5986e05" target="id-321e0ac80de248ce8bcdafe2b20a7993" archimateRelationship="id-fe66376ef309474199ce93b92461c3b0"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-4f871c59306b4c89bcbb8cf615a7bc62" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-6007311971c64c899913d893d5986e05" target="id-db87063d4e7744f4b8720b13509d7d1a" archimateRelationship="id-858c911a8b154893b24af065bf306d2f"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-96a7f40c2e4441ec8ab91d522a31ba4a" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-6007311971c64c899913d893d5986e05" target="id-a6dfc3c4a8844c97b80e5bfad8db368d" archimateRelationship="id-9243976618d74beda13e3e27120b2571">
+            <bendpoint startX="-470" endY="185"/>
+          </sourceConnection>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-db87063d4e7744f4b8720b13509d7d1a" targetConnections="id-4f871c59306b4c89bcbb8cf615a7bc62 id-dd5b6ce0006f4c3792df76d7b417a79c" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-3635648e6610420b87ee9d180ec13ef8">
+          <bounds x="975" y="240" width="300" height="80"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-63c29439330f4cbca280685603cb0ef1" name="4  TECNOLOGÍA   |   Ejecución y persistencia física" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" textAlignment="1" fillColor="#eef7e9">
+        <bounds x="30" y="935" width="1320" height="190"/>
+        <child xsi:type="archimate:DiagramObject" id="id-bd8b238ebff24ddab619a94fd59ad8e9" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-10ce34a194084d679a4e3abb85a82471">
+          <bounds x="35" y="65" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-1374414ad6264f14bfd43e072822bdbe" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-bd8b238ebff24ddab619a94fd59ad8e9" target="id-6007311971c64c899913d893d5986e05" archimateRelationship="id-41466a4c99464208bb7a15323a80705c">
+            <bendpoint startX="225" endX="-245" endY="255"/>
+            <bendpoint startX="225" startY="-140" endX="-245" endY="115"/>
+            <bendpoint startX="365" startY="-140" endX="-105" endY="115"/>
+          </sourceConnection>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-3c9f7309ab2a4e14b5667ceb28a9a765" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-30f2924ca0c344759927cdb79639e6e3">
+          <bounds x="505" y="65" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-9fe75492bef049e784d120052756f982" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-3c9f7309ab2a4e14b5667ceb28a9a765" target="id-6007311971c64c899913d893d5986e05" archimateRelationship="id-f91d2f3e8cc642f6a6739136197611b9"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-d82ed2c6db954b9b94c532e1d7cf9889" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-3c9f7309ab2a4e14b5667ceb28a9a765" target="id-7ec3c6edb31b4b769863f91a6b3faffd" archimateRelationship="id-948896a11873417f8bac29d25d922dc6"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-7ec3c6edb31b4b769863f91a6b3faffd" targetConnections="id-d82ed2c6db954b9b94c532e1d7cf9889" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-5ec165bfa4984bdf95f8ee1a0945f588">
+          <bounds x="975" y="65" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-dd5b6ce0006f4c3792df76d7b417a79c" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-7ec3c6edb31b4b769863f91a6b3faffd" target="id-db87063d4e7744f4b8720b13509d7d1a" archimateRelationship="id-2065a2ba3e794e4793f74580b9cc2ef1"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Note" id="id-7b10dd9c04ff45c6bac9bbeaafbdc47e" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" textAlignment="1" fillColor="#ffffff">
+        <bounds x="30" y="1155" width="1320" height="112"/>
+        <content>Lectura de relaciones: Serving = proveedor → consumidor; Realization = implementación → abstracción.
+Composition = todo → parte; Assignment = responsable → comportamiento o artefacto. Access = lectura y escritura.
+Meta esperada: p95 de confirmación extremo a extremo ≤ 3 s. Conversión = citas confirmadas / solicitudes válidas.
+API_Riesgo_v1 es el nombre solicitado en el taller y representa el contrato de agendamiento de MedConnect.</content>
+      </child>
+      <documentation>Vista principal de entrega. Meta propuesta p95 &lt;= 3 s. Flechas según su semántica, no según una secuencia de ejecución. Composition parte del componente hacia su interfaz; Assignment de interfaz a servicio; Serving de servicio a proceso. Access de lectura y escritura sobre datos lógicos; Artifact realiza esos datos y está asignado al nodo SQL Azure.</documentation>
+    </element>
+    <element xsi:type="archimate:ArchimateDiagramModel" name="02 Contexto ampliado del modelo inicial" id="id-6793206c1be64d4aa50bdb1050155062">
+      <child xsi:type="archimate:Group" id="id-f4e400e0d4524e9a8dd2e542d23554ba" name="MOTIVACIÓN" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" textAlignment="1" fillColor="#f4eff9">
+        <bounds x="30" y="30" width="1320" height="180"/>
+        <child xsi:type="archimate:DiagramObject" id="id-5a20952a42ba4fe58130d4b66d51c3e9" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-be23c68e1ce84b778b0687a73fb74016">
+          <bounds x="35" y="60" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-f5b454ce2d2241e5bc613ab49d9b30d6" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-5a20952a42ba4fe58130d4b66d51c3e9" target="id-4cc10026ce3d477db776d2bf05097a99" archimateRelationship="id-c282a615f93e4c44a273b4dc4992510c"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-4cc10026ce3d477db776d2bf05097a99" targetConnections="id-fa91fffc987846c5811ef67a0ab86ab0 id-f5b454ce2d2241e5bc613ab49d9b30d6" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-66301fca8b2a41c5a67324fd46430886">
+          <bounds x="505" y="60" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-3d38e8a2bdcc4f50ac689a975215acb9" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-c7e17c23042941bda9669de2457953dc">
+          <bounds x="975" y="60" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-fa91fffc987846c5811ef67a0ab86ab0" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-3d38e8a2bdcc4f50ac689a975215acb9" target="id-4cc10026ce3d477db776d2bf05097a99" archimateRelationship="id-3f8da8c48ab849599545ba381f96b83d"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-34d944b8346847a6a4fedd79cbe65977" name="NEGOCIO   |   Participantes y actividades del contexto inicial" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" textAlignment="1" fillColor="#fff9e8">
+        <bounds x="30" y="255" width="1320" height="460"/>
+        <child xsi:type="archimate:DiagramObject" id="id-e14ce40f8d7b4ee497121ef1317eaf02" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-88ca1b2fbf6a44439cac2def67e02cc4">
+          <bounds x="35" y="50" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-af25086b06ed4c4da9f905633ddab67e" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-e14ce40f8d7b4ee497121ef1317eaf02" target="id-730c2b06a8f94bb28826ff8fda7bfd37" archimateRelationship="id-6ab778af86354a2882555d9def1adc8a"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-8bcfa2f24aa549ba88bfff16283c658d" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-5b63438ac425408fbb6b66cc278ce23c">
+          <bounds x="505" y="50" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-3270ad29b6ae49f1b64dd001c36059da" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-8bcfa2f24aa549ba88bfff16283c658d" target="id-5064187e6ece4871917ed4df38b2375f" archimateRelationship="id-5a6c20bcfeaa4588847fda27ae806cc5"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-93910a6597b145febabb93d6577d8301" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-b48649c9ffe34695aafa905d863c6df6">
+          <bounds x="975" y="50" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-092eb0b1f2984abf8c284184c78d287e" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-93910a6597b145febabb93d6577d8301" target="id-f3837c8adc7241318a86d004621b04bb" archimateRelationship="id-1ef41cc1130f4d91af46ccdc39b652e0"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-730c2b06a8f94bb28826ff8fda7bfd37" targetConnections="id-af25086b06ed4c4da9f905633ddab67e id-868d276b48ff42ab9495ae97c9f57f19" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-da015f3761d64aa9a95392b9f4f68cb8">
+          <bounds x="35" y="190" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-5064187e6ece4871917ed4df38b2375f" targetConnections="id-3270ad29b6ae49f1b64dd001c36059da id-fd6e4687f58845aa80aef59b5eac3367 id-c24cb143355743c4a36adace83cee371" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-f63aacf382c4435eab38837e9754fd7b">
+          <bounds x="505" y="190" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-f3837c8adc7241318a86d004621b04bb" targetConnections="id-092eb0b1f2984abf8c284184c78d287e" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-cde167b09bc945439a8cb2949f84c8d1">
+          <bounds x="975" y="190" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-2d72bbad1d8c4e3399fd79de2ef900fc" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-99e07de9d7c74351b602cf50497cf2e0">
+          <bounds x="35" y="335" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-868d276b48ff42ab9495ae97c9f57f19" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-2d72bbad1d8c4e3399fd79de2ef900fc" target="id-730c2b06a8f94bb28826ff8fda7bfd37" archimateRelationship="id-1bc824dbf6f84e2eb2ad279a58ec0778"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-fd6e4687f58845aa80aef59b5eac3367" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-2d72bbad1d8c4e3399fd79de2ef900fc" target="id-5064187e6ece4871917ed4df38b2375f" archimateRelationship="id-2d05cb80ac0a4a88bbf07acbadcd6116"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-7c63a91ef615436eba99df673de82444" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-d61a7cadb9854e5aa13b3e5348a8d6a8">
+          <bounds x="505" y="335" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-c24cb143355743c4a36adace83cee371" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-7c63a91ef615436eba99df673de82444" target="id-5064187e6ece4871917ed4df38b2375f" archimateRelationship="id-8306fc7de6994880b0a1bb3044322540"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-8cf7644ab66846218c747f2f1e745ce5" name="APLICACIÓN   |   Componentes conservados del modelo inicial" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" textAlignment="1" fillColor="#edf8fc">
+        <bounds x="30" y="760" width="1320" height="330"/>
+        <child xsi:type="archimate:DiagramObject" id="id-e2a722e872864ccf8fbc3bbbac2824e7" targetConnections="id-4e24a4eddd264d87a44d249c86104668" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-bb23e1ea56194614adbfed06220108e5">
+          <bounds x="35" y="55" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-58b43f5b0cef42d8b4504d5d61ade9b6" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-2e55fb090aff494fbc161f2dfa0858a5">
+          <bounds x="505" y="55" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-cae1d3066cbf43bc85f5fdf99954c046" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-87f96994819b464a80e523b203a3ceb7">
+          <bounds x="975" y="55" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-f0b798418cc9491d9204519c3c539414" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-05a523d37fa2466cac2604c7b0aeeac3">
+          <bounds x="505" y="200" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-6444842bee92480e9a48bddc0016effd" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-f294acf661454cfe9a755e598d7ea01f">
+          <bounds x="975" y="200" width="300" height="80"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Group" id="id-16f6827f935f4a54a6d96911be9df60f" name="TECNOLOGÍA   |   Infraestructura del contexto inicial" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" textAlignment="1" fillColor="#eef7e9">
+        <bounds x="30" y="1160" width="1320" height="350"/>
+        <child xsi:type="archimate:DiagramObject" id="id-f8d9dd1d701c4cb5a239b83aa66b1bab" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-061c55c23c4246cbb3af86396402e8cc">
+          <bounds x="35" y="55" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-4e24a4eddd264d87a44d249c86104668" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-f8d9dd1d701c4cb5a239b83aa66b1bab" target="id-e2a722e872864ccf8fbc3bbbac2824e7" archimateRelationship="id-223201b990a348fea6a04fb26cd6744d"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-e88d277b1d1a49cdb26c0b7ea256f14f" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-30f2924ca0c344759927cdb79639e6e3">
+          <bounds x="975" y="55" width="300" height="80"/>
+          <sourceConnection xsi:type="archimate:Connection" id="id-415b34f0506248a9893838ed3331f704" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" lineWidth="2" source="id-e88d277b1d1a49cdb26c0b7ea256f14f" target="id-541a03121ce84225aea321edb34865c7" archimateRelationship="id-948896a11873417f8bac29d25d922dc6"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-c243774782ce4d2395983a352219d8a8" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-10ce34a194084d679a4e3abb85a82471">
+          <bounds x="505" y="220" width="300" height="80"/>
+        </child>
+        <child xsi:type="archimate:DiagramObject" id="id-541a03121ce84225aea321edb34865c7" targetConnections="id-415b34f0506248a9893838ed3331f704" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" archimateElement="id-5ec165bfa4984bdf95f8ee1a0945f588">
+          <bounds x="975" y="220" width="300" height="80"/>
+        </child>
+      </child>
+      <child xsi:type="archimate:Note" id="id-bd0dfb038be54c38bee1c797d990b312" font="1|Segoe UI|11.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|0|3|2|1|34|Segoe UI" fillColor="#ffffff">
+        <bounds x="30" y="1540" width="1320" height="75"/>
+        <content>Contexto conservado y reorganizado a partir del archivo inicial. La vista 01 contiene el contrato API, el servicio y las relaciones de trazabilidad.
+La base de datos física se representa como Artifact en Tecnología. No se afirma que esta infraestructura esté desplegada.</content>
+      </child>
+      <documentation>Contexto ampliado con los actores, procesos y componentes presentes en el archivo inicial, reorganizados para evitar recortes de texto. La vista 01 presenta la trazabilidad completa de la entrega. La infraestructura es una propuesta del modelo académico.</documentation>
+    </element>
+  </folder>
+  <purpose>Modelo académico de MedConnect basado en ejemplo 1 archi. Vista 01: cuatro bandas de Motivación, Negocio, Aplicación y Tecnología con notación oficial de ArchiMate 3.2. Vista 02: contexto previo reorganizado. Los tres elementos Driver, Goal y Outcome pertenecen al dominio Motivación; no se añaden elementos Strategy innecesarios. La meta de 3 s es esperada, no medida. Fuentes: matriz de relaciones 3.2 de Archi 5.10.0; https://archimate-community.pages.opengroup.org/workgroups/archimate-101/ ; https://learn.microsoft.com/es-es/azure/architecture/patterns/gateway-aggregation</purpose>
+</archimate:model>
